@@ -66,8 +66,6 @@ public class Stream_api {
 		List<String> names = Arrays.asList("Alice", "Bob", "Amanda", "Charlie", "Annie");
 
 		names.stream().filter(e -> !e.startsWith("A")).forEach(System.out::println);
-		
-		//
 
 		List<String> strings = Arrays.asList("Java", "Microservices", "Springboot");
 
@@ -93,50 +91,29 @@ public class Stream_api {
 
 		flatMapToInt.forEach(System.out::println);
 
-		Stream<Character> mapToObj = strings.stream()
-				.flatMapToInt(String::chars).mapToObj(c -> (char) c);// character stream - JavaMicroservicesSpringboot
-		
-		mapToObj.forEach(System.out::print);
-
+		Stream<Character> mapToObj = strings.stream().
+				flatMapToInt(String::chars).mapToObj(c -> (char) c);// character stream - JavaMicroservicesSpringboot
+																											
+		mapToObj.forEach(System.out::print); 
+ 
 		String example = "1";
-		IntStream charCodes = example.chars();
-		System.out.println();
-		charCodes.forEach(System.out::print);
-		
-		//Flat map
+		IntStream charCodes = example.chars(); 
+		System.out.println(); 
+		charCodes.forEach(System.out::print);  
 
 		List<List<String>> listOfLists = Arrays.asList(Arrays.asList("apple", "banana"),
 				Arrays.asList("orange", "grape"), Arrays.asList("kiwi"));
 
-		listOfLists.stream().flatMap(List::stream).sorted().forEach(s -> System.out.println(s));
+		listOfLists.stream().flatMap(List::stream).sorted().forEach(s -> System.out.println(s)); 
 		
-		//Array convert into list
-
-		int[] arr1 = { 2, 33, 22, 12, 2 };
-
-		String[] array = { "Apple", "Banana", "Cherry" };
-
-		List<Integer> intlist = Arrays.stream(arr1).boxed().collect(Collectors.toList());
-		System.out.println(intlist);
-
-		List<String> stlist = Arrays.stream(array).collect(Collectors.toList());
-		System.out.println(stlist);
+		int[] arr1 = {2,33,22,12,2};
 		
-		// using Flat map convert multi Dimensional array into list
+		List<int[]> l = Arrays.asList(arr1);
+		
+		String[] array = {"Apple", "Banana", "Cherry"};
+        List<String> list = Arrays.asList(array);
+        System.out.println(list);
 
-		int[][] multiArray = { { 1, 2 }, { 3, 4 }, { 5, 6 } };
-
-		List<List<Integer>> multiarrlist = new ArrayList<>();
-
-		for (int[] inarray : multiArray) {
-			multiarrlist.add(Arrays.stream(inarray).boxed().collect(Collectors.toList()));
-		}
-
-		System.out.println(multiarrlist);
-
-		List<Integer> collect2 = multiarrlist.stream().flatMap(List::stream).collect(Collectors.toList());
-		System.out.println(collect2);
-
-	}
+	} 
 
 }

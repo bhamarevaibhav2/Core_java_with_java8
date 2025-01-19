@@ -66,8 +66,6 @@ public class Stream_api {
 		List<String> names = Arrays.asList("Alice", "Bob", "Amanda", "Charlie", "Annie");
 
 		names.stream().filter(e -> !e.startsWith("A")).forEach(System.out::println);
-		
-		//
 
 		List<String> strings = Arrays.asList("Java", "Microservices", "Springboot");
 
@@ -93,9 +91,10 @@ public class Stream_api {
 
 		flatMapToInt.forEach(System.out::println);
 
-		Stream<Character> mapToObj = strings.stream()
-				.flatMapToInt(String::chars).mapToObj(c -> (char) c);// character stream - JavaMicroservicesSpringboot
-		
+		Stream<Character> mapToObj = strings.stream().flatMapToInt(String::chars).mapToObj(c -> (char) c);// character
+																											// stream -
+																											// JavaMicroservicesSpringboot
+
 		mapToObj.forEach(System.out::print);
 
 		String example = "1";
@@ -121,8 +120,6 @@ public class Stream_api {
 
 		List<String> stlist = Arrays.stream(array).collect(Collectors.toList());
 		System.out.println(stlist);
-		
-		// using Flat map convert multi Dimensional array into list
 
 		int[][] multiArray = { { 1, 2 }, { 3, 4 }, { 5, 6 } };
 
