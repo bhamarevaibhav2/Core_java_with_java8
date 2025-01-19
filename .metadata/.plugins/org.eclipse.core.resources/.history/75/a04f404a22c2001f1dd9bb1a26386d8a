@@ -1,0 +1,54 @@
+package abc;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
+public class first{
+
+	public static void main(String[] args){
+		
+		List<Integer> list = Arrays.asList(1, 8, 4, 10, 20, 60, 70, 4, 8, 60);
+		
+		int small = list.stream().sorted().distinct().skip(1).findFirst().get();
+		
+		int large = list.stream().sorted(Comparator.reverseOrder()).distinct().skip(1).findFirst().get();
+
+		int diff = large - small;
+
+		System.out.println(small + " " + large);
+		
+		System.out.println(diff);
+        
+        Map<String, Integer> map = new HashMap<>();
+        map.put("A", 1);
+        map.put("B", 2);
+        map.put("C", 1);
+        map.put("D", 3);
+
+        int targetValue = 3;
+        List<String> keys = new ArrayList<>();
+
+        for (Map.Entry<String, Integer> entry : map.entrySet()) {
+            if (entry.getValue() == targetValue) {
+                keys.add(entry.getKey());
+            }
+        }
+
+        System.out.println("Keys for value " + targetValue + ": " + keys);
+        
+        
+        
+        List<Map.Entry<String,Integer>> arraysList = new ArrayList<>(map.entrySet());
+        
+        System.out.println(arraysList);
+        
+		
+		
+	}
+
+}

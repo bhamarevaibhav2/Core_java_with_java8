@@ -1,0 +1,55 @@
+package abc;
+
+public class Students {
+	
+	int id;
+	String name;
+	String div;
+	
+	
+	public Students(int id, String name, String div) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.div = div;
+	}
+
+
+	public int getId() {
+		return id;
+	}
+
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+
+	public String getName() {
+		return name;
+	}
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+	public String getDiv() {
+		return div;
+	}
+
+
+	public void setDiv(String div) {
+		this.div = div;
+	}
+
+
+	@Override
+	public String toString() {
+		return "Students [id=" + id + ", name=" + name + ", div=" + div + "]";
+	}
+	
+	
+
+}

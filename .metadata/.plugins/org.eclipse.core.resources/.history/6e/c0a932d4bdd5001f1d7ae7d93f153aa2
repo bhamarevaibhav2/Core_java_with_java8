@@ -1,0 +1,89 @@
+package core_java;
+
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
+
+public class Stream_api {
+
+	public static void main(String[] args) {
+
+		String str = "i am vaibhav am dilip bhamare";
+		String string = Arrays.stream(str.split(" ")).max(Comparator.comparing(String::length)).get();
+		System.out.println(string);
+
+		String st = "sshdiiidkkdettl";
+		String collect4 = Arrays.stream(st.split("")).distinct().collect(Collectors.joining());
+		System.out.println(collect4);
+
+		String string2 = Arrays.stream(str.split(" ")).sorted(Comparator.comparing(String::length).reversed()).skip(2)
+				.findFirst().get();
+		int length = Arrays.stream(str.split(" ")).sorted(Comparator.comparing(String::length).reversed()).skip(2)
+				.findFirst().get().length();
+		System.out.println(string2 + " " + length);
+
+		Arrays.stream(str.split(" ")).map(s -> s + ":" + s.length()).forEach(System.out::println);
+
+		Map<String, Long> collect5 = Arrays.stream(str.split(" "))
+				.collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+		System.out.println(collect5);
+
+		Map<String, Long> collect6 = Arrays.stream(st.split(""))
+				.collect(Collectors.groupingBy(x -> x, Collectors.counting()));
+
+		System.out.println(collect6);
+
+		int[] arr = { 1, 2, 8, 2, 8, 4, 5 };
+
+		Arrays.stream(arr).boxed().sorted().forEach(System.out::print);
+		System.out.println();
+		System.out.println("---------------");
+		int sum = Arrays.stream(arr).reduce(Integer::sum).getAsInt();
+		System.out.println(sum);
+
+		int integer = Arrays.stream(arr).boxed().distinct().reduce(Integer::sum).get();
+		System.out.println(integer);
+
+		String string3 = Arrays.stream(str.split("")).filter(c -> str.indexOf(c) == str.lastIndexOf(c)).findFirst()
+				.get();
+		System.out.println(string3);
+
+		Map<String, Long> collect7 = Arrays.stream(str.split(""))
+				.collect(Collectors.groupingBy(s -> s, LinkedHashMap::new, Collectors.counting()));
+		System.out.println(collect7);
+
+		String string4 = collect7.entrySet().stream().filter(s -> s.getValue() > 1).map(s -> s.getKey()).findFirst()
+				.get();
+		System.out.println(string4);
+
+		List<String> names = Arrays.asList("Alice", "Bob", "Amanda", "Charlie", "Annie");
+
+		names.stream().filter(e -> !e.startsWith("A")).forEach(System.out::println);
+
+		List<String> strings = Arrays.asList("Java", "Microservices", "\n", "Springboot");
+
+		List<String> strings1 = Arrays.asList("Java", "Springboot", "API");
+
+		List<String> collect = strings.stream().filter(strings1::contains).collect(Collectors.toList());
+		System.out.println(collect);
+
+		Map<Character, Long> characterCount = strings.stream().flatMapToInt(String::chars) // Convert each string to an
+																							// IntStream of characters
+				.mapToObj(c -> (char) c) // Convert int to Character
+				.collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+
+		System.out.println(characterCount);
+		
+		Stream<Character> mapToObj = strings.stream().flatMapToInt(String::chars).mapToObj(c -> (char)c);
+		
+		mapToObj.forEach(System.out::print);
+
+	}
+
+}

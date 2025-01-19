@@ -1,0 +1,111 @@
+package core_java;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.function.Function;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+public class Java8MethodCheatSheet {
+	
+	public static void main(String[] args) {
+		
+		List<Employee> empList = EmployeeDataBase.getAllEmployees();
+		
+		empList.forEach(e -> System.out.println(e.getName()+": "+e.getSalary()));
+		
+		List<Employee> collect = empList.stream().sorted(Comparator.comparingDouble(Employee::getSalary)).collect(Collectors.toList());
+		
+		//System.out.println(collect);
+		
+		//collect.stream().forEach(System.out::println);
+		
+		collect.stream().filter(e -> e.getDept().equals("Development") && e.getSalary() > 85000).forEach(System.out::println);
+		
+		 Map<Integer, String> collect2 = collect.stream().filter(e -> e.getDept().equals("Sales")).collect(Collectors.toMap(Employee::getId, Employee::getName));
+		
+		 System.out.println(collect2);
+		 
+		 List<String> collect3 = empList.stream().map(e -> e.getDept()).distinct().collect(Collectors.toList());
+		 
+		 System.out.println(collect3);
+//		 empList.stream().map(e -> e.getProjects().stream().map(Project::getProjectCode))
+		
+		 
+		 
+		 
+		 
+		 String str = "i am vaibhav am dilip bhamare";
+		 String string = Arrays.stream(str.split(" ")).max(Comparator.comparing(String::length)).get();
+		 System.out.println(string);
+		 
+		 String st = "sshdiiidkkdettl";
+		 String collect4 = Arrays.stream(st.split("\\s+")).distinct().collect(Collectors.joining());
+		 System.out.println(collect4);
+		 
+		 String string2 = Arrays.stream(str.split(" ")).sorted(Comparator.comparing(String::length).reversed()).skip(2).findFirst().get();
+		 int length = Arrays.stream(str.split(" ")).sorted(Comparator.comparing(String::length).reversed()).skip(2).findFirst().get().length();
+		 System.out.println(string2+" "+length);
+	
+		 Arrays.stream(str.split(" ")).map(s -> s+":"+s.length()).forEach(System.out::println);
+		 
+		 Map<String, Long> collect5 = Arrays.stream(str.split(" ")).collect(Collectors.groupingBy(Function.identity(),Collectors.counting()));
+		 System.out.println(collect5);
+		 
+		 Map<String, Long> collect6 = Arrays.stream(st.split("")).collect(Collectors.groupingBy(x->x,Collectors.counting()));
+		 
+		 System.out.println(collect6);
+		 
+		 int[] arr = {1,2,8,2,8,4,5};
+		 
+		 Arrays.stream(arr).boxed().sorted().forEach(System.out::print);
+		 System.out.println();
+		 System.out.println("---------------");
+		 int sum = Arrays.stream(arr).reduce(Integer::sum).getAsInt();
+		 System.out.println(sum);
+		 
+		 Integer integer = Arrays.stream(arr).boxed().distinct().reduce(Integer::sum).get();
+		 System.out.println(integer);
+		 
+		 String string3 = Arrays.stream(str.split("")).filter(c -> str.indexOf(c)== str.lastIndexOf(c)).findFirst().get();
+		 System.out.println(string3);
+		 
+		 Map<String, Long> collect7 = Arrays.stream(str.split("")).collect(Collectors.groupingBy(s->s,LinkedHashMap::new,Collectors.counting()));
+		 System.out.println(collect7);
+		 
+		 String string4 = collect7.entrySet().stream().filter(s -> s.getValue() > 1).map(s -> s.getKey()).findFirst().get();
+		 System.out.println(string4);
+		 
+		 
+		 List<String> names = Arrays.asList("Alice", "Bob", "Amanda", "Charlie", "Annie");
+		 names.stream().filter(e -> !e.startsWith("A")).forEach(System.out::println);
+		 
+		 empList.stream().filter(e -> e.getSalary() > 80000).forEach(e -> System.out.println(e.getName()+" : "+e.getSalary()));
+		 
+		//avoid concurrent modification exception
+		Iterator<String> sr =  names.iterator();
+		//1.using remove method of iterator
+		while(sr.hasNext()) {
+			String s = sr.next();
+			if(s.equals("ss")) {
+				sr.remove(); //safe removal
+			}
+		}
+		//2. using synchronized block
+		synchronized (names) {
+		    for (String item : names) {	
+		        if (item.equals("ss")){
+		        	names.remove(item);
+		        }
+		    }
+		}
+	}
+
+}

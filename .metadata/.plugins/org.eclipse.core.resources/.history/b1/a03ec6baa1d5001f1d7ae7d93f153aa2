@@ -1,0 +1,31 @@
+package interview;
+
+import java.util.Arrays;
+
+public class CodeingQuesions {
+	
+	
+	public static int[] productofallExcludingselfindex(int[] nums) {
+		
+		int[]
+		
+		return ;
+	}
+	
+
+	public static void main(String[] args) {
+		
+		int[] array = { 1, 2, 3, 4 };
+
+//		int mul = Arrays.stream(array).boxed().reduce(1, (a, b) -> a * b);
+//
+//		Object[] array2 = Arrays.stream(array).boxed().map(e -> mul / e).toArray();
+//
+//		System.out.println(Arrays.toString(array2));
+		
+		int[] productarr = productofallExcludingselfindex(array);
+
+		System.out.println(Arrays.toString(productarr));
+	}
+
+}

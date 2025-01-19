@@ -1,0 +1,44 @@
+package abc;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class First {
+
+	
+	public static void main(String[] args) {
+		
+		List<Students> stlist = Arrays.asList(new Students(12, "Sumit", "A"),new Students(13, "Vaibhav", "B"),
+				new Students(14, "Rameshwar", "C"));
+		
+		List<Students> list = stlist.stream().sorted(Comparator.comparingInt(s -> ((Students) s).getName().length()).reversed()).collect(Collectors.toList());
+		
+		System.out.println(list);
+		
+		//stlist.stream().sorted().collect(Collectors.toList());
+
+		//List<Integer> fablist = Arrays.asList()
+		
+		//0,1,1,2,3,5
+
+		int n = 10;
+		
+		int a=-1,b=1,c=0;
+		List<Integer> fablist = new ArrayList<>();
+		
+		for(int i=0;i<= 7;i++) {
+			
+			c =a+b;//0
+			a =b;//1
+			b =c;//0
+			fablist.add(b);
+		}
+		System.out.println(fablist);
+		
+		int i = fablist.stream().filter(e -> e%2 != 0).reduce(1, (y,z) -> y*z);
+		System.out.println(i);
+	}
+}

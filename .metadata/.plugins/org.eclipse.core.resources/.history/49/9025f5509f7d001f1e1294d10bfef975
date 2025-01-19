@@ -1,0 +1,157 @@
+package java8.streamapi;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.OptionalDouble;
+import java.util.Set;
+import java.util.Map.Entry;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+public class AllMethods {
+
+	public static void main(String[] args) {
+
+		// convert Array into list
+		String[] stnums = {"Vaibhav", "Dilip", "Bhamare"};
+		Arrays.stream(stnums).collect(Collectors.toList());
+		int[] nums = { 1, 2, 3 };
+		List<Integer> listof = Arrays.stream(nums).boxed().collect(Collectors.toList());
+		System.out.println(listof);
+
+		// Lists
+		List<Integer> listint = Arrays.asList(23, 26, 28, 78, 44, 36, 12);
+		List<Double> listdob = Arrays.asList(23.3, 26.4, 28.12, 78.2);
+		List<String> list = Arrays.asList("apple", "custard Apple", "mango", "watermelon", "musk melon");
+
+		//filter that update the list as per predicate
+		list.stream().filter(a -> a.startsWith("A")).forEach(System.out::println); //endsWith
+		
+
+		// drop duplicate elements filter
+		List<Integer> listint1 = Arrays.asList(23, 26, 28, 23, 78, 44, 78, 36, 23, 12);
+		Set<Integer> set = new HashSet<>();
+		listint1.stream().filter(s -> set.add(s)).forEach(System.out::println);
+		listint1.stream().distinct().forEach(System.out::println);
+		// add duplicate elements in set
+		listint.stream().filter(n -> !set.add(n)).collect(Collectors.toList()).forEach(System.out::println);
+
+		// Sorting
+		System.out.println("Ascending...");
+		listint.stream().sorted().forEach(System.out::println);
+		listint.stream().sorted(Comparator.naturalOrder()).forEach(System.out::println);
+		listint.stream().sorted((o1, o2) -> o1.compareTo(o2)).forEach(System.out::print);
+		System.out.println("Descending...");
+		listint.stream().sorted(Comparator.reverseOrder()).forEach(System.out::println);
+		listint.stream().sorted((o1, o2) -> o2.compareTo(o1)).forEach(System.out::print);
+		System.out.println("name wise ascending...");
+		getStudentList().stream().sorted((o1, o2) -> o1.getName().compareTo(o2.getName())).forEach(System.out::println);
+		System.out.println("age wise ascending...");
+		getStudentList().stream().sorted((o1, o2) -> o1.age - o2.age) // Descending -: o2.age-o1.age
+				.forEach(System.out::println);
+		getStudentList().stream().sorted(Comparator.comparingInt(Students::getStid)).forEach(System.out::println);
+		getStudentList().stream().sorted(Comparator.comparingInt(Students::getStid).reversed())
+				.forEach(System.out::println);
+
+		// map
+		// create a stream of each element length
+		list.stream().map(String::length).forEach(System.out::println);
+		//create a stream of string and filter by word
+		listint.stream().map(s -> s + "").filter(a -> a.startsWith("2")).forEach(System.out::println);
+		//create a stream of square of all element
+		listint.stream().map(i -> i * i).forEach(System.out::println);
+		List<Integer> list2 = listint.stream().map(x -> x * 2).collect(Collectors.toList());
+
+		
+		
+		// in list find all elements square and filter by above 100 and average using
+		// mapToInt()
+		OptionalDouble opt = listint.stream().mapToInt(n -> n * n).filter(n -> n > 100).average();
+		int sum = listint.stream().mapToInt(Integer::intValue).sum();
+		long count2 = listint.stream().mapToInt(Integer::intValue).count();
+
+		System.out.println(opt);
+
+		// with stream api
+		List<Integer> evenlist = listint.stream().filter(i -> i % 2 == 0).collect(Collectors.toList());
+		System.out.println(evenlist);
+
+		String input1 = "Java articles Java are Awesome";
+		// find the first non-repeated character
+		Stream<Entry<Character, Long>> filter = input1.chars().mapToObj(s -> Character.valueOf((char) s))
+				.collect(Collectors.groupingBy(Function.identity(), LinkedHashMap::new, Collectors.counting()))
+				.entrySet().stream().filter(entry -> entry.getValue() == 1L);
+		List<Entry<Character, Long>> collect1 = filter.collect(Collectors.toList());
+		System.out.println(collect1);
+
+		
+		long count = listint.size();
+		
+		
+
+		listint.stream().max(Integer::compare).get();
+		listint.stream().max(Comparator.naturalOrder()).get();
+
+		listint.stream().min(Integer::compare).get();
+		listint.stream().min(Comparator.naturalOrder()).get();
+
+		listint.stream().findFirst();
+		listint.stream().findAny();
+
+		list.stream().filter(s -> s.startsWith("A")).forEach(System.out::println);
+
+		list.stream().map(s -> s.toUpperCase()).forEach(System.out::println);
+		listint.stream().filter(s -> s % 2 == 0).forEach(System.out::println);
+		double asDouble = listdob.stream().mapToDouble(Double::doubleValue).average().getAsDouble();
+		System.out.println(asDouble);
+
+		String collect6 = list.stream().collect(Collectors.joining(","));
+		System.out.println(collect6);
+
+		boolean allMatch = listint.stream().allMatch(s -> s % 2 == 0);
+		System.out.println(allMatch);
+
+		// flat map
+		List<List<String>> listoflist = Arrays.asList(Arrays.asList("Shirts", "Pants", "Jeans", "Tshirts"),
+				Arrays.asList("Apple", "Mango", "Watermelon", "Muskmelon"),
+				Arrays.asList("TV", "Fridge", "Coburd", "Stand"));
+
+		List<String> collect7 = listoflist.stream().flatMap(List::stream).collect(Collectors.toList());
+		System.out.println(collect7);
+
+		// operations on object//
+		List<Students> collect2 = getStudentList().stream().filter(a -> a.age > 30).collect(Collectors.toList());
+		System.out.println(collect2);
+		// ----------above 30 is pass other
+		// fail---------------------------------------------------------------------------------
+		Map<String, List<Students>> collect8 = getStudentList().stream()
+				.collect(Collectors.groupingBy(s -> s.age >= 30 ? "Pass" : "Fail"));
+		System.out.println(collect8);
+
+		// print all students having age less than 3rd highest age
+		List<Students> collect9 = getStudentList().stream().sorted((o1, o2) -> (o2.age - o1.age)).skip(3)
+				.collect(Collectors.toList());
+		System.out.println(collect9);
+
+	}
+
+	public static List<Students> getStudentList() {
+
+		List<Students> stlist = new ArrayList<>();
+		stlist.add(new Students(101, "Vaibhav", 23));
+		stlist.add(new Students(104, "Varun", 33));
+		stlist.add(new Students(103, "Rakesh", 34));
+		stlist.add(new Students(102, "Dinesh", 34));
+		stlist.add(new Students(109, "VInayak", 26));
+
+		return stlist;
+	}
+}

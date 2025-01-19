@@ -1,0 +1,23 @@
+package abc;
+
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class First {
+
+	
+	public static void main(String[] args) {
+		
+		List<Students> stlist = Arrays.asList(new Students(12, "Sumit", "A"),new Students(13, "Vaibhav", "B"),
+				new Students(14, "Rameshwar", "C"));
+		
+		//stlist.stream().sorted((s1,s2) -> s1.))
+
+		//List<Integer> fablist = Arrays.asList()
+		
+
+		
+	}
+}

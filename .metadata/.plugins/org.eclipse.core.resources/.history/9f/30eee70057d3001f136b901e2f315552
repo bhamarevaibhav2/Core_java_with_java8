@@ -1,0 +1,15 @@
+package solid;
+
+interface MessageService {
+    void sendMessage(String message);
+}
+
+public class DependencyInversion {
+	
+	private MessageService messageService;
+	
+	public DependencyInversion(MessageService messageService) {
+        this.messageService = messageService;
+    }
+
+}

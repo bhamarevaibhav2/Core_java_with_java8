@@ -1,0 +1,89 @@
+package java8.streamapi;
+
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
+
+public class SomeExamples {
+
+	public static void main(String[] args) {
+
+		String str = "Java articles Java are Awesome";
+		Stream<String> stream = Arrays.stream(str.split("\\s+"));
+
+		Map<String, Long> collect8 = stream.collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+		StringBuffer sb1 = new StringBuffer();
+		collect8.forEach((key, value) -> {
+			sb1.append(key);
+			sb1.append(value);
+		});
+		System.out.println(sb1);
+//-------------------------------------------
+		String str1 = "ABBCCCDDDDEEEEE";
+		StringBuffer sb = new StringBuffer();
+		List<String> collect = Arrays.stream(str1.split("")).collect(Collectors.toList());
+		System.out.println(collect);
+
+		str1.chars().mapToObj(c -> (char) c) // string into char of stream
+				.collect(Collectors.groupingBy(Function.identity(), Collectors.counting())) // stream into map key-value
+				.forEach((Key, Value) -> {
+					sb.append(Key);
+					sb.append(Value);
+				});
+		System.out.println(sb);
+		//--------------------------------------
+		List<String> stlist = Arrays.asList("Apple", "Mango", "Watermelon", "Muskmelon");
+		Map<Character, Long> collect1 = stlist.stream().collect(Collectors.groupingBy(s -> s.charAt(0),Collectors.counting()));
+		System.out.println(collect1);
+		//--------------integer starts with -----------------
+		List<Integer> listint = Arrays.asList(23, 26, 28, 23, 78, 44, 78, 36, 23, 12);
+		List<String> collect2 = listint.stream().map(s -> s+"").filter(i -> i.startsWith("2")).collect(Collectors.toList());
+		List<Integer> collect3 = listint.stream().filter(s -> String.valueOf(s).startsWith("2")).collect(Collectors.toList());
+		System.out.println(collect2);
+		//---------------duplicate elements---------
+		int[] arr = {12,21,12,34,12,24,12,34,36};
+		int[] nums = { 1, 2, 3 };
+		Set<Integer> set = new HashSet<>();
+		Set<Integer> collect4 = Arrays.stream(arr).boxed().filter(s -> !set.add(s)).collect(Collectors.toSet());
+		System.out.println(collect4);
+		//or
+		Arrays.stream(arr).boxed().collect(Collectors.groupingBy(e -> e,Collectors.counting()))
+		.entrySet().stream().
+		filter(v -> v.getValue() > 1)
+		.map(s -> s.getKey()).forEach(System.out::println);;
+		System.out.println("...remove duplicate elemnts.....");
+		Arrays.stream(arr).boxed().distinct().forEach(System.out::println);
+		int[] array = Arrays.stream(arr).distinct().toArray();//or
+		
+		//find palindromes words from list
+		List<String> pal = Arrays.asList("deed","main","vaibhav","radar","level");
+		pal.stream().filter(st -> st.equals(new StringBuffer(st).reverse().toString())).forEach(System.out::println);
+		
+		//merge two arrays
+		int[] mergearr = IntStream.concat(Arrays.stream(arr), Arrays.stream(nums)).distinct().toArray();
+		System.out.println(Arrays.toString(mergearr));
+		
+		//sort string list by their length
+		stlist.stream().sorted(Comparator.comparingInt(s -> s.length())).forEach(System.out::println);
+		
+		
+		String input1 = "Java articles Java are Awesome";
+		// find the first non-repeated character
+		Stream<Entry<Character, Long>> filter = input1.chars().mapToObj(s -> Character.valueOf((char) s))
+				.collect(Collectors.groupingBy(Function.identity(), LinkedHashMap::new, Collectors.counting()))
+				.entrySet().stream().filter(entry -> entry.getValue() == 1L);
+		List<Entry<Character, Long>> collec = filter.collect(Collectors.toList());
+		System.out.println(collect1);
+		
+	}
+
+}

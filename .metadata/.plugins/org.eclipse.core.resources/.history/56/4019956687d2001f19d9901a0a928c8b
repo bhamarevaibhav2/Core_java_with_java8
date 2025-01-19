@@ -1,0 +1,24 @@
+package singletonbreak;
+
+public class Singleton {
+	
+	private final static Singleton singleton = null;
+	
+	private Singleton() {
+		
+	}
+	
+	public static Singleton getInstatnce(Singleton singleton) {
+		
+		return 
+	}
+	
+	
+	
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

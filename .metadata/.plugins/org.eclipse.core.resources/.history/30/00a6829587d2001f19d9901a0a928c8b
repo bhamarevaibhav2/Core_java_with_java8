@@ -1,0 +1,29 @@
+package singletonbreak;
+
+public class Singleton {
+	
+	private final static Singleton singleton = null;
+	
+	private Singleton() {
+		
+	}
+	
+	public static Singleton getInstatnce() {
+		
+		if(singleton == null) {
+			return new Singleton();
+		}
+		
+		return singleton;
+	}
+	
+	
+	
+
+	public static void main(String[] args) {
+		
+		Singleton singleton1 = Singleton.getInstatnce();
+
+	}
+
+}

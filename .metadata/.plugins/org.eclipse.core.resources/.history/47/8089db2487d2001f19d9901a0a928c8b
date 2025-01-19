@@ -1,0 +1,15 @@
+package singletonbreak;
+
+public class Singleton {
+	
+	private Singleton() {
+		
+	}
+	
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

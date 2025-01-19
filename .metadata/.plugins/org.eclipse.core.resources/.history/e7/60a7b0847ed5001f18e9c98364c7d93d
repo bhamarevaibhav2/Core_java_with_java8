@@ -1,0 +1,28 @@
+package solid;
+
+//Objects of a superclass should be replaceable with objects of a subclass without affecting the correctness of the program. 
+//This principle ensures that a subclass can stand in for its superclass. 
+//Violating this principle can lead to unexpected behavior.
+interface Flyable {
+    void fly();
+}
+
+class Sparrow extends LiskovSubstitution implements Flyable {
+    @Override
+    public void fly() {
+        System.out.println("Sparrow flying");
+    }
+}
+
+class Penguin{
+    // Penguins do not implement Flyable
+}
+
+public class LiskovSubstitution {
+    public static void main(String[] args) {
+        Flyable myBird = new Sparrow();
+        myBird.fly(); // Output: Sparrow flying
+
+         myBird = new Penguin(); // This line would cause a compile-time error
+    }
+}
