@@ -66,8 +66,6 @@ public class Stream_api {
 		List<String> names = Arrays.asList("Alice", "Bob", "Amanda", "Charlie", "Annie");
 
 		names.stream().filter(e -> !e.startsWith("A")).forEach(System.out::println);
-		
-		//
 
 		List<String> strings = Arrays.asList("Java", "Microservices", "Springboot");
 
